@@ -4,8 +4,24 @@ namespace yii\icxp\helpers;
 
 class HRu
 {
-    public static function translit($str)
-    {
+    public static function strExpiry( $dateExpiry ) {
+        $dateStart = date_create(date("Y-m-d H:i:s"));
+        $dateEnd = date_create($dateExpiry);
+        $expiry = $dateEnd->diff($dateStart);
+        return ($expiry->y||$expiry->m||$expiry->d)
+                        ? 'P' .($expiry->y ? $expiry->y.'Y' : '')
+                              .($expiry->m ? $expiry->m.'M' : '')
+                              .($expiry->d ? $expiry->d.'D' : '')
+                        : ''
+                   .($expiry->h||$expiry->i||$expiry->s||$expiry->y)
+                        ? 'T'.($expiry->h ? $expiry->h.'H' : '')
+                             .($expiry->i ? $expiry->i.'M' : '')
+                             .($expiry->s ? $expiry->s.'S' : '')
+                             .($expiry->y ? $expiry->y.'Y' : '')
+                        : '';
+    }
+
+    public static function translit($str) {
         $tr = array(
             "А" => "A", "Б" => "B", "В" => "V", "Г" => "G",
             "Д" => "D", "Е" => "E", "Ж" => "J", "З" => "Z", "И" => "I",
