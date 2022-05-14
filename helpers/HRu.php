@@ -400,15 +400,17 @@ class HRu
 	return app()->file->set($file)->setContents("<?php\n return " . var_export($new,true) . ';');
     }
 	
-    function to_prepositional($str) {
-
+    function to_prepositional($str,$custom_cities=array()) {
 
         if (in_array( substr($str, -1), ['и','о','е','ё','э'])) return $str;
         if (in_array( substr($str, -3), ['ово','ево','ино','ыно'])) return $str;
 
-        $custom_cities = [
-            'Москва'=>'Москвы'
-        ];
+        if ( empty($custom_cities) ) {
+            $custom_cities = [
+                'Москва'=>'Москве'
+            ];
+        }
+
         if (isset($custom_cities[$str])) return $custom_cities[$str];
 
         $replace = array();
